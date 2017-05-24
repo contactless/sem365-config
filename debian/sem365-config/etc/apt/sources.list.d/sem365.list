@@ -1,0 +1,2 @@
+deb [arch=armel,all] http://release.sem365.ru/ wheezy main
+deb http://release.sem365.ru:8880/ sem365 main

@@ -1,0 +1,12 @@
+/etc/apt/sources.list.d/sem365.list
+/etc/init.d/sem365-config
+/etc/localtime.sem365
+/etc/network/interfaces.sem365
+/etc/ntp.conf.sem365
+/etc/ppp/ip-up.d/set-default-route
+/etc/ppp/peers/Beeline
+/etc/ppp/peers/Megafon
+/etc/ppp/peers/Mts
+/etc/timezone.sem365
+/etc/wb-configs.d/03wb-sem365-config
+/etc/zabbix/zabbix_agentd.conf.d/wb.conf

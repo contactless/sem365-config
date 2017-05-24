@@ -1,0 +1,49 @@
+sem365-config (0.7.2) stable; urgency=low
+
+  * change sem365-config.init
+
+ -- Alexandr Cherkashin <cherkashin@infsys.ru>  Wed, 24 May 2017 07:32:00 +0400
+sem365-config (0.7.1) stable; urgency=low
+
+  * change sem365-config.postinst and add sem365-config.init
+
+ -- Alexandr Cherkashin <cherkashin@infsys.ru>  Tue, 23 May 2017 12:47:16 +0400
+
+sem365-config (0.6) stable; urgency=low
+
+  * change cron for zabbix-agent
+  
+ -- Alexandr Cherkashin <cherkashin@infsys.ru>  Fri, 27 Apr 2017 11:47:16 +0400
+ 
+sem365-config (0.5) stable; urgency=low
+
+  * fix interfaces file install
+  * ser -> wb-serial
+  
+ -- Alexandr Cherkashin <cherkashin@infsys.ru>  wed, 27 Apr 2017 08:21:16 +0400
+ 
+sem365-config (0.4) stable; urgency=low
+
+  * fix remove all repo from list
+  
+ -- Alexandr Cherkashin <cherkashin@infsys.ru>  Tue, 11 Apr 2017 18:21:16 +0400
+
+sem365-config (0.3) stable; urgency=low
+
+  * change repo list for secure repo
+  * configs/etc/localtime → configs/etc/localtime.sem365
+
+ -- Alexandr Cherkashin <cherkashin@infsys.ru>  Wed, 05 Apr 2017 11:21:16 +0400
+
+sem365-config (0.2) stable; urgency=low
+
+  * add ability to apply config to both rootfs.
+
+ -- Alexandr Cherkashin <cherkashin@infsys.ru>  Tue, 04 Apr 2017 15:37:16 +0400
+
+sem365-config (0.1) stable; urgency=low
+
+  * Initial Release.
+
+ -- Alexandr Cherkashin <cherkashin@infsys.ru>  Tue, 30 Jun 2017 11:01:16 +0400
+

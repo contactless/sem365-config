@@ -1,0 +1,9 @@
+wb_move		/etc/ntp.conf
+wb_move         /etc/timezone
+wb_move         /etc/apt/sources.list.d/sem365.list
+wb_move         /etc/cron.d/zabbix-agent
+wb_move         /etc/ppp/ip-up.d/set-default-route
+wb_move         /etc/ppp/peers/Beeline
+wb_move         /etc/ppp/peers/Megafon
+wb_move         /etc/ppp/peers/Mts
+wb_move         /etc/zabbix/zabbix_agentd.conf.d/wb.conf

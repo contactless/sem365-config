@@ -1,0 +1,36 @@
+#!/bin/sh
+
+# Automatically added by dh_installinit
+if [ -x "/etc/init.d/sem365-config" ]; then
+	update-rc.d sem365-config start 11 S >/dev/null
+	invoke-rc.d sem365-config start || exit $?
+fi
+# End automatically added section
+
+
+#set -x
+#######VARS##################################################
+deb_rep=/etc/apt/sources.list
+wb_rep=/etc/apt/sources.list.d/sem365.list
+res_cfg=/opt/resident/semresident.xml
+zabb_addr=zabbix.sem365.ru
+zabbix_cfg=/etc/zabbix/zabbix_agentd.conf
+host_metadata=wb
+Hostname=$(wb-gen-serial -s)
+##############################################################
+
+#remove all sources list
+rm -rf /etc/apt/sources.list /etc/apt/sources.list.d/contactless.list /etc/apt/sources.list.d/wheezy-backports.list
+#rm /etc/resolv.conf && touch /etc/resolv.conf
+> /etc/resolv.conf
+#disable en for apt
+echo 'Acquire::Languages "none";'>/etc/apt/apt.conf.d/00aptitude
+#add trust ssh for main sem server
+mkdir -p /root/.ssh
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGT1n0O0pNfFgTyu2ROoT6j0TLCG66P68+/v2fs2c4HqYDj3lFzmATubAXU2aFSZrYAVJa90EPwq+ZVi6TSiC8+0wpF18zj056L0mFoj5NCGIZEnbEiJyzFVO/2Jv0QnSC62QywndvJCPxKjdTjkNR5sFXkiN523WiEwGdhaDQaXAOFR8DBZuMHZ5Tw0uMxq6tL8z1MyAu5P8Gi3YO/q/qBbi3DsKu//jMKxRXv/onqmYCRksgKD9w7zDCQ/PfA8o+PUDgKknQqI2WcrrlYYgFG7MgAZhXl3YiF2AdJptAVkIBfvq4pIQMg5rudp23zgJKz88EGubhF9VyvPQxBXZp sem@sem01" >>/root/.ssh/authorized_keys
+
+#add repo auth key
+apt-key add /tmp/keysem365
+rm -rf /tmp/keysem365
+
+echo "System is configured!"

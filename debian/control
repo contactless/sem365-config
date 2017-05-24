@@ -1,0 +1,16 @@
+Source: sem365-config
+Section: config
+Priority: extra
+Maintainer: Alexandr Cherkashin <cherkashin@infsys.ru>
+Build-Depends: debhelper (>= 8.0.0), config-package-dev (>= 5.0)
+Standards-Version: 3.9.4
+Homepage: <https://sem365.ru>
+
+Package: sem365-config
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, bash, mosquitto (>=1.4.7), wb-mqtt-serial, wb-mqtt-confed, wb-rules, wb-homa-gpio, ppp, cron, logrotate, netcat, nginx, zabbix-agent, wb-configs(>=1.71.1)
+#Depends: ${shlibs:Depends}, ${misc:Depends}, bash, mosquitto, ppp, cron, logrotate, netcat, nginx
+Provides: ${diverted-files}
+Conflicts: ${diverted-files}
+Replaces:
+Description: sem365 controller configuration package
