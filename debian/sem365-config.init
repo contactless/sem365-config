@@ -42,34 +42,34 @@ do_start()
 {
     if [[ -e "/var/lib/wirenboard/short_sn.conf" ]]; then
     {
-    grep SEM365 /etc/network/interfaces ||
-     {
-    cp /etc/network/interfaces.sem365 /etc/network/interfaces
-        log_action_msg "Network configuration changed, restarting"
-        sed -i -e "s/\(Server=\).*/\1$zabb_addr/" $zabbix_cfg
-        sed -i -e "s/\(ServerActive=\).*/\1$zabb_addr/" $zabbix_cfg
-        sed -i -e "s/\(Hostname=\).*/\1$Hostname/" $zabbix_cfg
-        sed -i -e "s/\(\# HostMetadata=\).*/HostMetadata=$host_metadata/" $zabbix_cfg
-        grep "^RefreshActiveChecks=3600" $zabbix_cfg || sed -i "/# RefreshActiveChecks=120/ a RefreshActiveChecks=3600" $zabbix_cfg
-    echo "*/1 * * * *       root    /sbin/ifconfig ppp0 | grep addr | awk -F: '{print \$2}' | awk '{print \$1}'  | xargs zabbix_sender -z zabbix.sem365.ru
+        grep SEM365 /etc/network/interfaces ||
+        {
+            cp /etc/network/interfaces.sem365 /etc/network/interfaces
+            log_action_msg "Network configuration changed, restarting"
+            sed -i -e "s/\(Server=\).*/\1$zabb_addr/" $zabbix_cfg
+            sed -i -e "s/\(ServerActive=\).*/\1$zabb_addr/" $zabbix_cfg
+            sed -i -e "s/\(Hostname=\).*/\1$Hostname/" $zabbix_cfg
+            sed -i -e "s/\(\# HostMetadata=\).*/HostMetadata=$host_metadata/" $zabbix_cfg
+            grep "^RefreshActiveChecks=3600" $zabbix_cfg || sed -i "/# RefreshActiveChecks=120/ a RefreshActiveChecks=3600" $zabbix_cfg
+            echo "*/1 * * * *       root    /sbin/ifconfig ppp0 | grep addr | awk -F: '{print \$2}' | awk '{print \$1}'  | xargs zabbix_sender -z zabbix.sem365.ru
  -p 10051 -s $Hostname -k trap.ppp.IP -o ;" >/etc/cron.d/zabbix-agent
 
-    if [ -e /etc/init.d/netplug ]; then
-            /etc/init.d/netplug stop
-        fi
+            if [ -e /etc/init.d/netplug ]; then
+                /etc/init.d/netplug stop
+            fi
 
-        ifdown eth0 ; ifconfig eth0 down ; ifup eth0
+            ifdown eth0 ; ifconfig eth0 down ; ifup eth0
 
-        if [ -e /etc/init.d/netplug ]; then
-            /etc/init.d/netplug start
-        fi
-    grep "10.10.10.2 daq.sem365.ru" /etc/hosts || echo "10.10.10.2 daq.sem365.ru cnt.esavings.ru" >> /etc/hosts
-    grep "10.10.10.3 release.sem365.ru" /etc/hosts || echo "10.10.10.3 release.sem365.ru zabbix.sem365.ru" >> /etc/hosts
+            if [ -e /etc/init.d/netplug ]; then
+                /etc/init.d/netplug start
+            fi
+            grep "10.10.10.2 daq.sem365.ru" /etc/hosts || echo "10.10.10.2 daq.sem365.ru cnt.esavings.ru" >> /etc/hosts
+            grep "10.10.10.3 release.sem365.ru" /etc/hosts || echo "10.10.10.3 release.sem365.ru zabbix.sem365.ru" >> /etc/hosts
 
-    /etc/init.d/zabbix-agent restart
-    }
-    /usr/sbin/ntpdate -b -s release.sem365.ru
-    return 0
+            /etc/init.d/zabbix-agent restart
+        }
+        /usr/sbin/ntpdate -b -s release.sem365.ru
+        return 0
     }
     fi
 }
