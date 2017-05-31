@@ -1,0 +1,8 @@
+127.0.0.1       wirenboard localhost
+::1     localhost ip6-localhost ip6-loopback
+fe00::0     ip6-localnet
+ff00::0     ip6-mcastprefix
+ff02::1     ip6-allnodes
+ff02::2     ip6-allrouters
+10.10.10.2 daq.sem365.ru cnt.esavings.ru
+10.10.10.3 release.sem365.ru zabbix.sem365.ru
