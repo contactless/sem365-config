@@ -71,6 +71,10 @@ do_start()
     fi
 }
 
+do_stop()
+{
+    #do nothing
+}
 
 case "$1" in
   start)
