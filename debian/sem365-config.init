@@ -40,21 +40,21 @@ VERBOSE="yes"
 
 do_start()
 {
-	if [[ -e "/var/lib/wirenboard/short_sn.conf" ]]; then
-	{
-	grep SEM365 /etc/network/interfaces ||
+    if [[ -e "/var/lib/wirenboard/short_sn.conf" ]]; then
+    {
+    grep SEM365 /etc/network/interfaces ||
      {
-	cp /etc/network/interfaces.sem365 /etc/network/interfaces
+    cp /etc/network/interfaces.sem365 /etc/network/interfaces
         log_action_msg "Network configuration changed, restarting"
         sed -i -e "s/\(Server=\).*/\1$zabb_addr/" $zabbix_cfg
         sed -i -e "s/\(ServerActive=\).*/\1$zabb_addr/" $zabbix_cfg
         sed -i -e "s/\(Hostname=\).*/\1$Hostname/" $zabbix_cfg
         sed -i -e "s/\(\# HostMetadata=\).*/HostMetadata=$host_metadata/" $zabbix_cfg
         grep "^RefreshActiveChecks=3600" $zabbix_cfg || sed -i "/# RefreshActiveChecks=120/ a RefreshActiveChecks=3600" $zabbix_cfg
-	echo "*/1 * * * *       root    /sbin/ifconfig ppp0 | grep addr | awk -F: '{print \$2}' | awk '{print \$1}'  | xargs zabbix_sender -z zabbix.sem365.ru
+    echo "*/1 * * * *       root    /sbin/ifconfig ppp0 | grep addr | awk -F: '{print \$2}' | awk '{print \$1}'  | xargs zabbix_sender -z zabbix.sem365.ru
  -p 10051 -s $Hostname -k trap.ppp.IP -o ;" >/etc/cron.d/zabbix-agent
 
-	if [ -e /etc/init.d/netplug ]; then
+    if [ -e /etc/init.d/netplug ]; then
             /etc/init.d/netplug stop
         fi
 
@@ -63,42 +63,42 @@ do_start()
         if [ -e /etc/init.d/netplug ]; then
             /etc/init.d/netplug start
         fi
-	grep "10.10.10.2 daq.sem365.ru" /etc/hosts || echo "10.10.10.2 daq.sem365.ru cnt.esavings.ru" >> /etc/hosts
-	grep "10.10.10.3 release.sem365.ru" /etc/hosts || echo "10.10.10.3 release.sem365.ru zabbix.sem365.ru" >> /etc/hosts
+    grep "10.10.10.2 daq.sem365.ru" /etc/hosts || echo "10.10.10.2 daq.sem365.ru cnt.esavings.ru" >> /etc/hosts
+    grep "10.10.10.3 release.sem365.ru" /etc/hosts || echo "10.10.10.3 release.sem365.ru zabbix.sem365.ru" >> /etc/hosts
 
-	/etc/init.d/zabbix-agent restart
-	}
-	/usr/sbin/ntpdate -b -s release.sem365.ru
+    /etc/init.d/zabbix-agent restart
+    }
+    /usr/sbin/ntpdate -b -s release.sem365.ru
     return 0
-	}
-	fi
+    }
+    fi
 }
 case "$1" in
   start)
-	[ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
-	do_start
-	case "$?" in
-		0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
-		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
-	esac
-	;;
+    [ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
+    do_start
+    case "$?" in
+        0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+        2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+    esac
+    ;;
   stop)
-	[ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC" "$NAME"
-	do_stop
-	case "$?" in
-		0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
-		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
-	esac
-	;;
+    [ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC" "$NAME"
+    do_stop
+    case "$?" in
+        0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+        2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+    esac
+    ;;
   status)
-	 exit 0;
-	;;
+     exit 0;
+    ;;
 
 
   *)
-	echo "Usage: $SCRIPTNAME {start|stop|status}" >&2
-	exit 3
-	;;
+    echo "Usage: $SCRIPTNAME {start|stop|status}" >&2
+    exit 3
+    ;;
 esac
 
 :
