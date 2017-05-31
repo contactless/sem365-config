@@ -74,6 +74,7 @@ do_start()
 do_stop()
 {
     #do nothing
+    return 0
 }
 
 case "$1" in
