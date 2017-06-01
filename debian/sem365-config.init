@@ -40,28 +40,8 @@ VERBOSE="yes"
 
 do_start()
 {
-    if [[ -e "/var/lib/wirenboard/short_sn.conf" ]]; then
-    {
-
-            grep "^RefreshActiveChecks=3600" $zabbix_cfg || sed -i "/# RefreshActiveChecks=120/ a RefreshActiveChecks=3600" $zabbix_cfg
-            echo "*/1 * * * *       root    /sbin/ifconfig ppp0 | grep addr | awk -F: '{print \$2}' | awk '{print \$1}'  | xargs zabbix_sender -z zabbix.sem365.ru
- -p 10051 -s $Hostname -k trap.ppp.IP -o ;" >/etc/cron.d/zabbix-agent
-
-            if [ -e /etc/init.d/netplug ]; then
-                /etc/init.d/netplug stop
-            fi
-
-            ifdown eth0 ; ifconfig eth0 down ; ifup eth0
-
-            if [ -e /etc/init.d/netplug ]; then
-                /etc/init.d/netplug start
-            fi
-
-
-        /usr/sbin/ntpdate -b -s release.sem365.ru
-        return 0
-    }
-    fi
+    /usr/sbin/ntpdate -b -s release.sem365.ru
+    return 0
 }
 
 do_stop()
