@@ -1,0 +1,14 @@
+PidFile=/var/run/zabbix/zabbix_agentd.pid
+
+LogFile=/var/log/zabbix-agent/zabbix_agentd.log
+LogFileSize=0
+
+Server=zabbix.sem365.ru
+ServerActive=zabbix.sem365.ru
+
+HostnameItem=system.run[cat /var/lib/wirenboard/short_sn.conf]
+HostMetadata=wb
+
+RefreshActiveChecks=3600
+
+Include=/etc/zabbix/zabbix_agentd.conf.d/

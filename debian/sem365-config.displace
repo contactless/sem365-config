@@ -3,3 +3,4 @@
 /etc/timezone.sem365
 /etc/localtime.sem365
 /etc/ntp.conf.sem365
+/etc/zabbix/zabbix_agentd.conf.sem365
