@@ -1,32 +1,21 @@
 #!/bin/bash
 ### BEGIN INIT INFO
-# Provides:          wb-sem365-configs
+# Provides:          wb-sem365-config
 # Default-Start:     S
 # Default-Stop:
 # Required-Start:    wb-prepare
 # Required-Stop:
-# Short-Description:  make config for SEM365 zabbix server
-# Description:        make config for SEM365 zabbix server
+# Short-Description:  SEM365 Startup script
+# Description:        SEM365 Startup script
 ### END INIT INFO
 
 # Do NOT "set -e"
 
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-DESC="make SEM365 config"
+DESC="SEM365 Startup script"
 NAME=sem365-config
 SCRIPTNAME=/etc/init.d/$NAME
-DAEMON=/usr/bin/wb-watch-sem365-config
-PIDFILE=/var/run/wb-watch-sem365-config.pid
-#######VARS##################################################
-deb_rep=/etc/apt/sources.list
-wb_rep=/etc/apt/sources.list.d/sem365.list
-res_cfg=/opt/resident/semresident.xml
-zabb_addr=zabbix.sem365.ru
-zabbix_cfg=/etc/zabbix/zabbix_agentd.conf
-host_metadata=wb
-Hostname=$(cat  /var/lib/wirenboard/short_sn.conf)
-##############################################################
 
 # Load the VERBOSE setting and other rcS variables
 . /lib/init/vars.sh
