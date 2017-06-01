@@ -1,3 +1,9 @@
+sem365-config (0.7.3~beta2) stable; urgency=medium
+
+  * Static zabbix config and cron jobs
+
+ -- Evgeny Boger <boger@contactless.ru>  Thu, 01 Jun 2017 19:13:43 +0300
+
 sem365-config (0.7.3~beta1) stable; urgency=medium
 
   * proper displace for changed configs
