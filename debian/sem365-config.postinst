@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #DEBHELPER#
 
@@ -9,9 +9,16 @@ wb_rep=/etc/apt/sources.list.d/sem365.list
 res_cfg=/opt/resident/semresident.xml
 zabb_addr=zabbix.sem365.ru
 zabbix_cfg=/etc/zabbix/zabbix_agentd.conf
+zabbix_cron=/etc/cron.d/zabbix-agent
 host_metadata=wb
-Hostname=$(wb-gen-serial -s)
+data_dir=/usr/share/sem365-config
 ##############################################################
+
+let "RAND5 = $RANDOM % 5"
+
+cat ${data_dir}/zabbix-agent.cron.template | sed -e "s/%%RAND5%%/${RAND5}/g" > /tmp/zabbix-agent.cron
+
+ucf --debconf-ok /tmp/zabbix-agent.cron ${zabbix_cron}
 
 #remove all sources list
 rm -rf /etc/apt/sources.list /etc/apt/sources.list.d/contactless.list /etc/apt/sources.list.d/wheezy-backports.list
