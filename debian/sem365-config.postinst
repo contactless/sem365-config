@@ -31,7 +31,6 @@ mkdir -p /root/.ssh
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGT1n0O0pNfFgTyu2ROoT6j0TLCG66P68+/v2fs2c4HqYDj3lFzmATubAXU2aFSZrYAVJa90EPwq+ZVi6TSiC8+0wpF18zj056L0mFoj5NCGIZEnbEiJyzFVO/2Jv0QnSC62QywndvJCPxKjdTjkNR5sFXkiN523WiEwGdhaDQaXAOFR8DBZuMHZ5Tw0uMxq6tL8z1MyAu5P8Gi3YO/q/qBbi3DsKu//jMKxRXv/onqmYCRksgKD9w7zDCQ/PfA8o+PUDgKknQqI2WcrrlYYgFG7MgAZhXl3YiF2AdJptAVkIBfvq4pIQMg5rudp23zgJKz88EGubhF9VyvPQxBXZp sem@sem01" >>/root/.ssh/authorized_keys
 
 #add repo auth key
-apt-key add /tmp/keysem365
-rm -rf /tmp/keysem365
+apt-key add ${data_dir}/keysem365
 
 echo "System is configured!"
