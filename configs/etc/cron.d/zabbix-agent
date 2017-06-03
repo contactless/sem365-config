@@ -1,1 +1,1 @@
-*/1 * * * *       root    /sbin/ifconfig ppp0 | grep addr | awk -F: '{print $2}' | awk '{print $1}'  | xargs zabbix_sender -z zabbix.sem365.ru -p 10051 -s `cat /var/lib/wirenboard/short_sn.conf` -k trap.ppp.IP -o ;
+*/1 * * * *       root    /sbin/ifconfig ppp0 | grep addr | awk -F: '{print $2}' | awk '{print $1}'  | xargs zabbix_sender -z zabbix.sem365.ru -p 10051 -s `cat /var/lib/sem365/sem365guid.conf || cat /var/lib/wirenboard/short_sn.conf` -k trap.ppp.IP -o ;
