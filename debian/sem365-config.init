@@ -1,32 +1,21 @@
 #!/bin/bash
 ### BEGIN INIT INFO
-# Provides:          wb-sem365-configs
+# Provides:          wb-sem365-config
 # Default-Start:     S
 # Default-Stop:
 # Required-Start:    wb-prepare
 # Required-Stop:
-# Short-Description:  make config for SEM365 zabbix server
-# Description:        make config for SEM365 zabbix server
+# Short-Description:  SEM365 Startup script
+# Description:        SEM365 Startup script
 ### END INIT INFO
 
 # Do NOT "set -e"
 
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-DESC="make SEM365 config"
+DESC="SEM365 Startup script"
 NAME=sem365-config
 SCRIPTNAME=/etc/init.d/$NAME
-DAEMON=/usr/bin/wb-watch-sem365-config
-PIDFILE=/var/run/wb-watch-sem365-config.pid
-#######VARS##################################################
-deb_rep=/etc/apt/sources.list
-wb_rep=/etc/apt/sources.list.d/sem365.list
-res_cfg=/opt/resident/semresident.xml
-zabb_addr=zabbix.sem365.ru
-zabbix_cfg=/etc/zabbix/zabbix_agentd.conf
-host_metadata=wb
-Hostname=$(cat  /var/lib/wirenboard/short_sn.conf)
-##############################################################
 
 # Load the VERBOSE setting and other rcS variables
 . /lib/init/vars.sh
@@ -40,65 +29,42 @@ VERBOSE="yes"
 
 do_start()
 {
-	if [[ -e "/var/lib/wirenboard/short_sn.conf" ]]; then
-	{
-	grep SEM365 /etc/network/interfaces ||
-     {
-	cp /etc/network/interfaces.sem365 /etc/network/interfaces
-        log_action_msg "Network configuration changed, restarting"
-        sed -i -e "s/\(Server=\).*/\1$zabb_addr/" $zabbix_cfg
-        sed -i -e "s/\(ServerActive=\).*/\1$zabb_addr/" $zabbix_cfg
-        sed -i -e "s/\(Hostname=\).*/\1$Hostname/" $zabbix_cfg
-        sed -i -e "s/\(\# HostMetadata=\).*/HostMetadata=$host_metadata/" $zabbix_cfg
-        grep "^RefreshActiveChecks=3600" $zabbix_cfg || sed -i "/# RefreshActiveChecks=120/ a RefreshActiveChecks=3600" $zabbix_cfg
-	echo "*/1 * * * *       root    /sbin/ifconfig ppp0 | grep addr | awk -F: '{print \$2}' | awk '{print \$1}'  | xargs zabbix_sender -z zabbix.sem365.ru
- -p 10051 -s $Hostname -k trap.ppp.IP -o ;" >/etc/cron.d/zabbix-agent
-
-	if [ -e /etc/init.d/netplug ]; then
-            /etc/init.d/netplug stop
-        fi
-
-        ifdown eth0 ; ifconfig eth0 down ; ifup eth0
-
-        if [ -e /etc/init.d/netplug ]; then
-            /etc/init.d/netplug start
-        fi
-	grep "10.10.10.2 daq.sem365.ru" /etc/hosts || echo "10.10.10.2 daq.sem365.ru cnt.esavings.ru" >> /etc/hosts
-	grep "10.10.10.3 release.sem365.ru" /etc/hosts || echo "10.10.10.3 release.sem365.ru zabbix.sem365.ru" >> /etc/hosts
-
-	/etc/init.d/zabbix-agent restart
-	}
-	/usr/sbin/ntpdate -b -s release.sem365.ru
+    /usr/sbin/ntpdate -b -s release.sem365.ru
     return 0
-	}
-	fi
 }
+
+do_stop()
+{
+    #do nothing
+    return 0
+}
+
 case "$1" in
   start)
-	[ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
-	do_start
-	case "$?" in
-		0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
-		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
-	esac
-	;;
+    [ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
+    do_start
+    case "$?" in
+        0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+        2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+    esac
+    ;;
   stop)
-	[ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC" "$NAME"
-	do_stop
-	case "$?" in
-		0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
-		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
-	esac
-	;;
+    [ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC" "$NAME"
+    do_stop
+    case "$?" in
+        0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+        2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+    esac
+    ;;
   status)
-	 exit 0;
-	;;
+     exit 0;
+    ;;
 
 
   *)
-	echo "Usage: $SCRIPTNAME {start|stop|status}" >&2
-	exit 3
-	;;
+    echo "Usage: $SCRIPTNAME {start|stop|status}" >&2
+    exit 3
+    ;;
 esac
 
 :

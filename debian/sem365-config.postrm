@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+zabbix_cron="/etc/cron.d/zabbix-agent"
+
+if [[ $1 = purge ]]; then
+    [[ -x /usr/bin/ucf ]] && ucf --debconf-ok --purge ${zabbix_cron}
+    rm -f ${zabbix_cron}
+fi
